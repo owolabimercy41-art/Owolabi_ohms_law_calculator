@@ -1,0 +1,115 @@
+# OHM'S LAW AND POWER CALCULATOR
+# CTE123 Python Mini Project
+# ND1 Mechatronics Engineering, YABATECH
+
+# This list stores all calculations made by the user.
+calculation_history = []
+
+
+# This function collects valid numerical input.
+def get_number(message):
+    while True:
+        try:
+            number = float(input(message))
+
+            if number < 0:
+                print("Error: Negative values are not allowed.")
+            else:
+                return number
+
+        except ValueError:
+            print("Invalid input! Please enter a number.")
+
+
+# This function performs the engineering calculations.
+def calculate(choice):
+
+    if choice == "1":
+        # Calculate voltage: V = I x R
+        current = get_number("Enter current (A): ")
+        resistance = get_number("Enter resistance (Ohms): ")
+
+        voltage = current * resistance
+
+        result = f"Voltage = {voltage:.2f} V"
+
+    elif choice == "2":
+        # Calculate current: I = V / R
+        voltage = get_number("Enter voltage (V): ")
+        resistance = get_number("Enter resistance (Ohms): ")
+
+        if resistance == 0:
+            print("Error: Resistance cannot be zero.")
+            return
+
+        current = voltage / resistance
+
+        result = f"Current = {current:.2f} A"
+
+    elif choice == "3":
+        # Calculate resistance: R = V / I
+        voltage = get_number("Enter voltage (V): ")
+        current = get_number("Enter current (A): ")
+
+        if current == 0:
+            print("Error: Current cannot be zero.")
+            return
+
+        resistance = voltage / current
+
+        result = f"Resistance = {resistance:.2f} Ohms"
+
+    elif choice == "4":
+        # Calculate power: P = V x I
+        voltage = get_number("Enter voltage (V): ")
+        current = get_number("Enter current (A): ")
+
+        power = voltage * current
+
+        result = f"Power = {power:.2f} Watts"
+
+    else:
+        print("Invalid choice. Select between 1 and 4.")
+        return
+
+    # Display and save the result.
+    print("\nCalculation Result:")
+    print(result)
+
+    calculation_history.append(result)
+
+
+# Main program loop.
+while True:
+
+    print("\n==============================")
+    print(" OHM'S LAW AND POWER CALCULATOR")
+    print("==============================")
+    print("1. Calculate Voltage")
+    print("2. Calculate Current")
+    print("3. Calculate Resistance")
+    print("4. Calculate Power")
+    print("5. View Calculation History")
+    print("6. Exit")
+
+    choice = input("\nEnter your choice: ")
+
+    if choice in ["1", "2", "3", "4"]:
+        calculate(choice)
+
+    elif choice == "5":
+        # Display all previous calculations.
+        print("\nCALCULATION HISTORY")
+
+        if len(calculation_history) == 0:
+            print("No calculations have been made yet.")
+        else:
+            for item in calculation_history:
+                print("-", item)
+
+    elif choice == "6":
+        print("Thank you for using the calculator!")
+        break
+
+    else:
+        print("Invalid menu choice. Try again.")
